@@ -1,59 +1,875 @@
-<script type="module">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turtle's Clinic</title>
 
-    import * as THREE from 'https://cdn.skypack.dev/three';
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <!-- bootstrap cdn link  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    let camera, scene, renderer;
-    let mesh;
+    <!-- font awesome link   -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    init();
-    animate();
 
-    function init() {
 
-        camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-        camera.position.z = 400;
 
-        scene = new THREE.Scene();
-
-        const geometry = new THREE.BoxGeometry( 200, 200, 200 );
-        const material = new THREE.MeshBasicMaterial( { color: "red" } );
-
-        mesh = new THREE.Mesh( geometry, material );
-        scene.add( mesh );
-
-        renderer = new THREE.WebGLRenderer( { antialias: true } );
-        renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
-
-        window.addEventListener( 'resize', onWindowResize );
-
-    }
-
-    function onWindowResize() {
-
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize( window.innerWidth, window.innerHeight );
-
-    }
-
-    function animate() {
-
-        requestAnimationFrame( animate );
-
-        mesh.rotation.x += 0.005;
-        mesh.rotation.y += 0.01;
-
-        renderer.render( scene, camera );
-
-    }
-
-</script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsivestyle.css">
+</head>
 
 <style>
-    *{
-        margin: 0;
+    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,300&family=Roboto+Slab:wght@100;200;400;500;600;700;900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Roboto+Slab:wght@100;200;400;500;600;700;900&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+:root {
+    /* background color */
+    --primary-color: #004caa;
+    --secondary-color: #fc5185;
+    --bg-light-blue: #3672bc;
+    --bg-dark: #666;
+    --bg-white: #fff;
+
+
+    /* text style */
+    --primary-font: 'Roboto Slab', serif;
+    --secondary-font: 'Josefin Sans';
+    --primary-text: #004caa;
+    --secondary-text: #fc5185;
+    --text-white: #fff;
+    --text-black: #222;
+    --text-gray: #666;
+    --text-light: #ddd;
+}
+
+body {
+    font-family: var(--primary-font);
+    background: var(--bg-white);
+}
+
+a {
+    text-decoration: none;
+
+
+}
+
+::-webkit-scrollbar {
+    width: .375rem;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light-blue);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+}
+
+.wrapper {
+    padding: 6.25rem 0;
+
+}
+
+.main-btn {
+    display: inline-block;
+    border: .0625rem solid var(--bg-white);
+    color: var(--text-white);
+    text-align: center;
+    padding: .75rem 1.375rem;
+    font-size: 1rem;
+    background: transparent;
+    text-transform: capitalize;
+    border-radius: .1875rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.main-btn:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--text-white);
+}
+
+.fill-btn {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--text-white);
+}
+
+.fill-btn :hover {
+    background-color: var(--secondary-color);
+    border-color: bg var(--bg-white);
+    color: var(--text-black);
+
+}
+
+h1 {
+    font-size: 3.875rem;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    color: var(--text-white);
+    font-family: var(--secondary-font);
+
+}
+
+h2 {
+    font-size: 3.875rem;
+    font-weight: 600;
+    color: var(--text-white);
+    font-family: var(--secondary-font);
+
+}
+
+h3 {
+    font-size: 2.25rem;
+    /* margin-bottom: 1.25rem; */
+    font-weight: 600;
+    color: var(--text-white);
+    font-family: var(--secondary-font);
+
+}
+
+h4 {
+    font-size: 1.5rem;
+    /* margin-bottom: 1.25rem; */
+    font-weight: 600;
+    line-height: 2.25rem;
+    color: var(--text-black);
+    font-family: var(--secondary-font);
+
+}
+
+h5 {
+    font-size: 1.5rem;
+    margin-bottom: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-white);
+    line-height: 2.25rem;
+    font-family: var(--secondary-font);
+
+}
+
+h6 {
+    font-size: 0.875rem;
+    margin-bottom: 0.9375rem;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: var(--text-black);
+    font-family: var(--secondary-font);
+
+}
+
+p {
+    font-size: 1rem;
+    color: var(--text-gray);
+    line-height: 1.625rem;
+}
+
+.card {
+    border-radius: 0.625rem;
+    background-color: var(--bg-white);
+    box-shadow: .5084rem 1.1419rem 2.5rem 0 rgb(0 0 0 /8%);
+    padding: 3.75rem 3.125rem 4.687rem;
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    border: 0;
+}
+
+@keyframes movebounce {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
     }
+
+    50% {
+        -webkit-transform: translateY(1.25rem);
+        transform: translateY(1.25rem);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+}
+
+.header_wrapper .navbar {
+    padding: .9375rem 0;
+    background-color: transparent;
+    transition: .3s ease-in-out;
+}
+
+.header_wrapper .navbar-toggler,
+.header_wrapper .navbar-toggler:focus {
+    border: 0;
+    color: var(--text-black);
+    box-shadow: none;
+    line-height: 2;
+}
+
+.header_wrapper .nav-item {
+    margin: 0 .25rem;
+}
+
+.header_wrapper .nav-item .nav-link {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--primary-color);
+    display: inline-block;
+    font-family: var(--secondary-font);
+
+}
+
+.header_wrapper .nav-item .nav-link:hover,
+.header_wrapper .nav-item .nav-link :focus,
+.header_wrapper .nav-item .nav-link.active {
+    color: var(--secondary-text);
+}
+
+.navbar.header.scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: var(--bg-white);
+    box-shadow: .5084rem 1.149rem 2.5rem 0 rgb(0 0 0 /8%);
+    transition: 0.3s ease-in-out;
+}
+
+/* banner */
+.banner_wrapper {
+    background-image: url(./images/top-banner-img/Top-banner.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.banner_wrapper p {
+    max-width: 80%;
+    color: var(--text-white);
+}
+
+.banner_wrapper .top-right-sec {
+    position: relative;
+    background-image: url(./images/top-banner-img/top-right-bg.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    display: inline-block;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.banner_wrapper.animate-img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-index: 22;
+}
+
+.banner_wrapper .animate-img .aimg1 {
+    margin-right: 5.6875rem;
+    position: absolute;
+    
+    
+     -webkit-animation-name: movebounce;
+    animation-name: movebounce;
+    -webkit-animation-delay: 100ms;
+    animation-delay: 100ms;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+}
+.banner_wrapper .animate-img .aimg2 {
+    margin-left: 12.2rem;
+    position: absolute;
+    -webkit-animation-name: movebounce;
+    animation-name: movebounce;
+    -webkit-animation-delay: 200ms;
+    animation-delay: 200ms;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+}
+.home .card:hover{
+    -webkit-transform:translateY(-0.625rem);
+    transform:translateY(-0.625rem); 
+}
+.home .icon-box{
+    text-align: center;
+    margin:0 auto 2.5rem;
+}
+.about_wrapper h2{
+    color:var(-- text-black);
+ }   
+ .about_wrapper .card{
+     width:80%;
+     flex-direction: row;
+     justify-content: space-between;
+     flex-wrap: wrap;
+ }
+ .about_wrapper .about-clinic:nth-child(1),
+ .about_wrapper .about-clinic:nth-child(2){
+    margin-bottom: 2.8125rem;
+ }
+ .about_wrapper .about-clinic:nth-child(2),
+ .about_wrapper .about-clinic:nth-child(4){
+    padding-left:3.75rem;
+ }
+ .about_wrapper .line-1,
+ .about-wrapper .line-2{
+    content:'';
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:100%;
+    background:var(--bg_dark);
+ 
+ } 
+ .about-wraper .line-2{ 
+    width:100%;
+    height:.0625rem;
+ }
+ .about_wrapper .about-animate{
+    position:absolute;
+    left:-2.5rem;
+    animation:movebounce 3s linear infinite;
+ }  
+ .services_wrapper{
+    background-color: var(--primary-color);
+ } 
+ .services_wrapper .card{
+    background-color: transparent;
+    border: 0.0625rem solid var(--bg-light-blue);
+    box-shadow: none;
+   padding: 2.5rem; 
+ }
+ .services_wrapper .card:hover{
+    background-color: var(--bg-light-blue);
+    cursor: cell;
+    border-color: transparent;
+
+ }
+ .services_wrapper .card h4,
+ .services_wrapper .card p{
+    color: var(--text-white);
+ }
+ .services_wrapper .icon-box{
+    margin-bottom: 1.875rem;
+ }
+    
+ /* team section */
+ .team_wrapper .card{
+    padding: 1.25rem;
+ }
+ .team_wrapper .card:hover{
+    -webkit-transform:translateY(-.625rem) ;
+    transform: translateY(-.625rem);
+ }
+ .team_wrapper .team-img{
+    margin: 0 auto;
+ }
+.team-info  h5{
+    color: var(--bg-light-blue);
+}
+              
+               
+
+
+ .team-wrapper .team-info .social-network{
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    padding: .625rem 0;
+    /* list-style: none; */
+    display:flex;
+    align-items: center;
+    justify-content: center;
+ }
+ .team_wrapper.team-info .social-network  li a{
+    width: 1.5625rem;
+    height:1.5625rem;
+    line-height: 1.5625rem;
+    display: block;
+    border-radius: .3125rem;
+    font-size: .75rem;
+    background-color: var(--bg-dark);
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    list-style: none;
+    color: var(--text-white);
+    margin: 0 .3125rem;
+
+ }
+ .team_wrapper .team-info .social-network li a :hover{
+    background-color: var(--secondary-color);
+ }
+ .team_wrapper .team-info .social-network li a i{
+    list-style: none;
+ }
 </style>
+
+<body data-bs-spy="scroll" data-bs-target="navbar" data-bs-offset="100">
+
+    <!-- navbar section -->
+    <header class="header_wrapper">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="image/logo.png" alt="" img-fluid> Turtle's Clinic </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <!-- <span class="navbar-toggler-icon"></span> -->
+                    <i class="fa-regular fa-bars-staggered" navbar-toggler-icon></i>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav menu-navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#team">Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="gallery.html" target="self">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="testimonials.html" target="_self">Testimonial</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+                        <li class="nav-item mt-3 mt-lg-0">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+
+
+    <!-- navbar exit -->
+
+
+
+
+    <!-- banner section -->
+    <section id="home" class="home">
+        <div class="banner_wrapper wrapper">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 order-md-1 order-2">
+                        <h3>better life through </h3>
+                        <h1>better dentistry</h1>
+                        <p>Join us to a fun and friendly dental enviroment. Our professionals are working to hard to see
+                            smile on
+                            your face that you deserve! we are dedicated about our duties</p>
+                        <a href="A_form.html" class="main-btn mt-4 fill-btn " target="_self">Appointment</a>
+                        <a href="#" class="main-btn mt-4 ms-3 ">Learn More</a>
+                    </div>
+                    <div class="col-md-6 order-md-2 order-1 mb-md-0 mb-5>
+            <div class=" top-right-sec">
+                        <div class="animate-img">
+                            <img class="aimg1" src="./images/top-banner-img/woman-brush.png">
+                            <img class="aimg2" src="./images/top-banner-img/doctor.png">
+                        </div>
+                        <img class="image-fluid ms-x1-5" src="./images/top-banner-img/top-right-img-1.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="wrapper pb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="md-4 col-sm-4 mb-4">
+                        <div class="card text-center">
+                            <div class="icon-box">
+                                <img src="./images/top-banner-img/Appointment-icon.png">
+                            </div>
+                            <div>
+                                <h4>Easy appointment</h4>
+
+                                <p>Lorem ipsuim, saepe perspiciatis cum rem officiis!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-4 col-sm-4 mb-4">
+                        <div class="card text-center">
+                            <div class="icon-box">
+                                <img src="./images/top-banner-img/Emergency-icon.png" alt="">
+                            </div>
+                            <div>
+                                <h4>Emergency Services</h4>
+
+                                <p>Lorem inim, saepe perspiciatis cum rem officiis!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-4 col-sm-4 mb-4">
+                        <div class="card text-center">
+                            <div class="icon-box">
+                                <img src="./images/top-banner-img/7-Service-icon.png" alt="">
+                            </div>
+                            <div>
+                                <h4> Services 24/7</h4>
+
+                                <p>Lorem ipsum dolor sit amet consui, doloremque minima </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- banner section exit -->
+
+
+
+
+
+
+    <!-- about section -->
+    <section id="about" class="about_wrapper wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-mb-0 mb-5">
+                    <div class="position-relative">
+                        <img src="./images/about/about-banner1.png" class="img-fluid">
+                        <img src="./images/about/about-img2.png " class="about-animate ">
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-start">
+                    <h2>Welcome to a Family</h2>
+                    <p>lorum luptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magn
+                        .</p>
+                    <div class="mt-5 card">
+                        <div class="about-clinic">
+                            <h4>500+</h4>
+                            <p>Happy Patients</p>
+                        </div>
+                        <div class="about-clinic">
+                            <h4>88+</h4>
+                            <p>Qualified Doctors</p>
+                        </div>
+                        <div class="about-clinic">
+                            <h4>25+</h4>
+                            <p>Years Experience</p>
+                        </div>
+                        <div class="about-clinic">
+                            <h4>55+</h4>
+                            <p>Dental Awards</p>
+                        </div>
+
+                        <span class="line-1"></span>
+                        <span class="line-2"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- about section exit -->
+
+
+
+
+
+
+    <!-- service section  -->
+    <section id="services" class="services_wrapper wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-sn-12 text- center mb-5">
+                    <h3>Our Services</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="icon-box">
+                            <img src="./images/services/1.svg" alt="">
+                        </div>
+                        <div>
+                            <h4>complete dentistry</h4>
+                            <p>Lorem iitatibus distinctio corporis tempore quidem?
+                            </p>
+                            <a href="#" class="main-btn mt-4">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="icon-box">
+                            <img src="./images/services/2.svg" alt="">
+                        </div>
+                        <div>
+                            <h4>Dental Selants</h4>
+                            <p>Lorem ipsum, dolor sit amctio corporis tempore quidem?
+                            </p>
+                            <a href="#" class="main-btn mt-4">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="icon-box">
+                            <img src="./images/services/3.svg" alt="">
+                        </div>
+                        <div>
+                            <h4>Dental Implants</h4>
+                            <p>Lorem ipsums distinctio corporis tempore quidem?
+                            </p>
+                            <a href="#" class="main-btn mt-4">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="icon-box">
+                            <img src="./images/services/4.svg" alt="">
+                        </div>
+                        <div>
+                            <h4>Oral Surgery</h4>
+                            <p>Lorem ipsuus distinctio corporis tempore quidem?
+                            </p>
+                            <a href="#" class="main-btn mt-4">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="icon-box">
+                            <img src="./images/services/5.svg" alt="">
+                        </div>
+                        <div>
+                            <h4>General dentistry</h4>
+                            <p>Lorem ipsum,bus distinctio corporis tempore quidem?
+                            </p>
+                            <a href="#" class="main-btn mt-4">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="icon-box">
+                            <img src="./images/services/6.svg" alt="">
+                        </div>
+                        <div>
+                            <h4>Complete Dentistry</h4>
+                            <p>Lorem ipsum, dos distinctio corporis tempore quidem?
+                            </p>
+                            <a href="#" class="main-btn mt-4">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+    <!-- services section exit -->
+
+
+
+
+
+    <!-- team section -->
+    <section class="team_wrapper wrapper" id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm12 text-center mb-5">
+                    <h3 class="text-black"> Our Dentists</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card rounded-3">
+                        <div class="team-img">
+                            <img src="./images/team/team1.png" class="img-fluid" alt="">
+                        </div>
+                        <div class="team-info pt-4 text-center">
+                            <h5>darry millins</h5>
+                            <p>Oral Surgeon</p>
+                            <ul class="social-network">
+                                <i class="fa fa-facebook"></i> &nbsp;&nbsp;
+                                <i class="fa fa-twitter"></i>&nbsp;&nbsp;
+                                <i class="fa fa-google"></i>&nbsp;&nbsp;
+
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card rounded-3">
+                        <div class="team-img">
+                            <img src="./images/team/team2.png" class="img-fluid" alt="">
+                        </div>
+                        <div class="team-info pt-4 text-center">
+                            <h5>Jonas Brains</h5>
+                            <p>Oral Surgeon</p>
+                            <ul class="social-network">
+                                <i class="fa fa-facebook"></i> &nbsp;&nbsp;
+                                <i class="fa fa-twitter"></i>&nbsp;&nbsp;
+                                <i class="fa fa-google"></i>&nbsp;&nbsp;
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card rounded-3">
+                        <div class="team-img">
+                            <img src="./images/team/team3.png" class="img-fluid" alt="">
+                        </div>
+                        <div class="team-info pt-4 text-center">
+                            <h5>Becky Drawes</h5>
+                            <p>Oral Surgeon</p>
+                            <ul class="social-network">
+                                <i class="fa fa-facebook"></i> &nbsp;&nbsp;
+                                <i class="fa fa-twitter"></i>&nbsp;&nbsp;
+                                <i class="fa fa-google"></i>&nbsp;&nbsp;
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- team section exit -->
+
+
+
+
+    <!-- gallery section -->
+
+
+
+
+    <!-- gallery section exit  -->
+
+
+
+    <!-- testimonial section   -->
+
+
+
+
+    <!-- testimonial section exit -->
+
+
+
+    <!-- appointment section -->
+
+
+
+
+    <!-- appointment section exit -->
+
+
+
+
+    <!-- blog section -->
+
+
+
+
+    <!-- blog section exit -->
+
+
+
+
+
+    <!-- footer section -->
+
+
+
+
+    <!-- footer section exit -->
+
+
+
+    <!-- bootstrap js cdn link  -->
+
+
+
+
+
+    <!-- custom js cdn link -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+
+    <script src="main.js"></script>
+</body>
